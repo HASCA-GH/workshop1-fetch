@@ -5,34 +5,40 @@
 
 console.log('Happy hacking :)')
 
-const url = "https://platzi-avo.vercel.app/api/avo"
+const baseUrl = "https://platzi-avo.vercel.app"
+const urlApi = "https://platzi-avo.vercel.app/api/avo"
+
+const appNode = document.querySelector('#app');
 
 // WEB API USING PROMISES:
 // Conectar al server
-fetch(url)
+fetch(urlApi)
 // Procesar la respuesta y convertirla en json
 .then((respuesta) =>respuesta.json())
 // JSON->Data->Renderizar info en browser
 .then((responseJson) =>{
     // console.log('DAta: ', responseJson.data)
     const todosLosItems=[]
-    responseJson.data.forEach(item => {
+    responseJson.data.forEach((item) => {
         // crear imagen
         const imagen = document.createElement('img');
+        imagen.src = `${baseUrl}${item.image}` ;
+
         // crear titulo
         const title = document.createElement('h2');
+        title.textContent = item.name;
         // crear precio
         const price = document.createElement('div');
+        price.textContent = item.price;
 
         const container = document.createElement('div');
         container.append(imagen, title, price);
 
-        // imagen.src = item.image;
         // document.body.appendChild(imagen)
         // document.body.appendChild(title)
         // document.body.appendChild(price)
         todosLosItems.push(container)
     })
-    document.body.append(...todosLosItems)
+    appNode.append(...todosLosItems)
 })
 
